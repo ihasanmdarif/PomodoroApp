@@ -25,18 +25,27 @@ const AppProvider = ({ children }) => {
       currentTime: 900,
     },
   ];
-
   const defaultMood = appMoods[0];
 
   const defaultTheme = themes.tomato;
 
-  const [currentTheme, setCurrentTheme] = useState(defaultTheme);
+  const retriveCurrentTheme = () => {
+    return JSON.parse(localStorage.getItem("currentTheme"));
+  };
+
+  const [currentTheme, setCurrentTheme] = useState(
+    retriveCurrentTheme() || defaultTheme
+  );
 
   const [currentMood, setCurrentMood] = useState(defaultMood);
 
   const [moods, setMoods] = useState(appMoods);
 
   const [isTimerOn, setIsTimerOn] = useState(false);
+
+  const saveThemeToLocal = (theme) => {
+    localStorage.setItem("currentTheme", JSON.stringify(theme));
+  };
 
   const decrementTime = (updatedTime) => {
     setCurrentMood((prevState) => ({
@@ -47,6 +56,7 @@ const AppProvider = ({ children }) => {
 
   const toggleTheme = (theme) => {
     setCurrentTheme(theme);
+    saveThemeToLocal(theme);
   };
 
   const toggleMoods = (mood) => {
@@ -69,7 +79,6 @@ const AppProvider = ({ children }) => {
   };
 
   const changeMoodTimer = (moods) => {
-    console.log(moods);
     setMoods(moods);
   };
 
