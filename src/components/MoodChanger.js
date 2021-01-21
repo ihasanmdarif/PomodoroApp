@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
+import useSound from "use-sound";
 import styled, { css } from "styled-components";
 import { AppContext } from "../AppProvider";
 import { device } from "../styles/device";
+import menuClick from "../tones/menuClick.mp3";
 
 const Switcher = styled.div`
   display: inline-block;
@@ -14,14 +16,12 @@ const Switcher = styled.div`
   @media ${device.mobileS} {
     padding: 10px;
   }
-
   @media ${device.mobileM} {
     padding: 12px 10px;
   }
   @media ${device.laptop} {
     padding: 17px 28px;
   }
-
   ${(props) =>
     props.isActive &&
     css`
@@ -68,7 +68,12 @@ const MoodChanger = () => {
     AppContext
   );
 
+  const [playButtonClick] = useSound(menuClick, {
+    volume: 0.2,
+  });
+
   const handleMoodChange = (elem) => {
+    playButtonClick();
     resetTimer();
     toggleMoods(elem);
   };

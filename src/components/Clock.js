@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import useSound from "use-sound";
 import styled, { css } from "styled-components";
 import { AppContext } from "../AppProvider";
+import siren from "../tones/siren.mp3";
 
 const ClockDial = styled.div`
   margin: 30px auto;
@@ -112,9 +113,14 @@ const Clock = () => {
     return `${remainingDashArray} 283`;
   }
 
+  const [playSiren] = useSound(siren, {
+    onend: resetCurrentTimer,
+  });
+
   useEffect(() => {
     if (currentMood.currentTime == 0 || !isTimerOn) {
       clearInterval(timerInterval);
+      playSiren();
     }
   }, [currentMood, isTimerOn]);
 
