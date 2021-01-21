@@ -9,8 +9,8 @@ const AppProvider = ({ children }) => {
     {
       name: "pomodoro",
       displayName: "pomodoro",
-      maxTime: 1500,
-      currentTime: 1500,
+      maxTime: 10,
+      currentTime: 10,
     },
     {
       name: "shortBreak",
@@ -76,6 +76,7 @@ const AppProvider = ({ children }) => {
       ...prevState,
       currentTime: prevState.maxTime,
     }));
+    resetTimer();
   };
 
   const changeMoodTimer = (moods) => {

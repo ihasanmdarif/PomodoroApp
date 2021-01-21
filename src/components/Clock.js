@@ -118,9 +118,19 @@ const Clock = () => {
   });
 
   useEffect(() => {
-    if (currentMood.currentTime == 0 || !isTimerOn) {
+    if (currentMood.currentTime === 0 || !isTimerOn) {
       clearInterval(timerInterval);
-      playSiren();
+
+      if (!isTimerOn) {
+        document.title = "Pomodoro App";
+      }
+
+      isTimerOn && playSiren();
+    }
+    if (isTimerOn) {
+      document.title = `Remainging time - ${formatTime(
+        currentMood.currentTime
+      )}`;
     }
   }, [currentMood, isTimerOn]);
 

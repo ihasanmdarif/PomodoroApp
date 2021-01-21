@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import useSound from "use-sound";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {
   FiSettings,
   FiX,
@@ -250,16 +250,37 @@ const Label = styled.span`
   }
 `;
 
+const shakeAnimation = keyframes`
+0%, 100% {transform: translateX(0);}
+10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
+20%, 40%, 60%, 80% {transform: translateX(10px);}
+`;
+
+const ToolTip = styled.div`
+  padding: 5px;
+  color: white;
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: bolder;
+  animation-name: ${shakeAnimation};
+  animation-duration: 1s;
+  animation-fill-mode: both;
+`;
+
 const SettingsModal = () => {
   const {
     currentTheme,
     themes,
     toggleTheme,
     moods,
+    isTimerOn,
     changeMoodTimer,
   } = useContext(AppContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isToolTipOpen, setIsToolTipOpen] = useState(false);
 
   const [playButtonClick] = useSound(menuClick, {
     volume: 0.2,
@@ -270,11 +291,17 @@ const SettingsModal = () => {
     color: {
       ...currentTheme,
     },
-    font: {},
   });
 
   const showModal = () => {
     playButtonClick();
+    if (isTimerOn) {
+      setIsToolTipOpen(true);
+      setTimeout(() => {
+        setIsToolTipOpen(false);
+      }, 2500);
+      return;
+    }
     setIsModalOpen(true);
   };
 
@@ -379,6 +406,9 @@ const SettingsModal = () => {
       <Icon onClick={showModal}>
         <FiSettings />
       </Icon>
+      {isTimerOn && isToolTipOpen && (
+        <ToolTip>Timer is on, Turn it off first!</ToolTip>
+      )}
     </>
   );
 };
