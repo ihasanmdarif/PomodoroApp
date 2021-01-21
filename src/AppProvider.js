@@ -9,8 +9,8 @@ const AppProvider = ({ children }) => {
     {
       name: "pomodoro",
       displayName: "pomodoro",
-      maxTime: 10,
-      currentTime: 10,
+      maxTime: 1500,
+      currentTime: 1500,
     },
     {
       name: "shortBreak",
