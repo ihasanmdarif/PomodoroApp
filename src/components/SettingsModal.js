@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import useSound from "use-sound";
 import styled, { keyframes } from "styled-components";
 import {
   FiSettings,
@@ -12,8 +11,6 @@ import {
 import { AppContext } from "../AppProvider";
 
 import { device } from "../styles/device";
-
-import menuClick from "../tones/menuClick.mp3";
 
 // color: #bdc3c7;
 const Icon = styled.span`
@@ -282,10 +279,6 @@ const SettingsModal = () => {
 
   const [isToolTipOpen, setIsToolTipOpen] = useState(false);
 
-  const [playButtonClick] = useSound(menuClick, {
-    volume: 0.2,
-  });
-
   const [currentSettings, setCurrentSettings] = useState({
     timer: moods,
     color: {
@@ -294,7 +287,6 @@ const SettingsModal = () => {
   });
 
   const showModal = () => {
-    playButtonClick();
     if (isTimerOn) {
       setIsToolTipOpen(true);
       setTimeout(() => {
@@ -306,17 +298,14 @@ const SettingsModal = () => {
   };
 
   const closeModal = () => {
-    playButtonClick();
     setIsModalOpen(false);
   };
 
   const handleColorChanges = (theme) => {
-    playButtonClick();
     setCurrentSettings((prevState) => ({ ...prevState, color: theme }));
   };
 
   const handleTimerChanges = (event) => {
-    playButtonClick();
     const { value, name } = event.target;
     const valueAsSeconds = value * 60;
 

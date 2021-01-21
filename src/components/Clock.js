@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import useSound from "use-sound";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { AppContext } from "../AppProvider";
-import siren from "../tones/siren.mp3";
+import alarm from "../tones/alarm.wav";
 
 const ClockDial = styled.div`
   margin: 30px auto;
@@ -78,6 +78,11 @@ const Clock = () => {
     resetCurrentTimer,
   } = useContext(AppContext);
 
+  const [playSiren, { stop }] = useSound(alarm, {
+    onend: resetCurrentTimer,
+    volume: 0.3,
+  });
+
   const formatTime = (time) => {
     let minutes = Math.floor(time / 60);
 
@@ -100,6 +105,7 @@ const Clock = () => {
       }, 1000);
     } else {
       resetCurrentTimer();
+      stop();
       clearInterval(timerInterval);
     }
   };
@@ -113,10 +119,6 @@ const Clock = () => {
     return `${remainingDashArray} 283`;
   }
 
-  const [playSiren] = useSound(siren, {
-    onend: resetCurrentTimer,
-  });
-
   useEffect(() => {
     if (currentMood.currentTime === 0 || !isTimerOn) {
       clearInterval(timerInterval);
@@ -124,15 +126,13 @@ const Clock = () => {
       if (!isTimerOn) {
         document.title = "Pomodoro App";
       }
-
       isTimerOn && playSiren();
-    }
-    if (isTimerOn) {
-      document.title = `Remainging time - ${formatTime(
+    } else if (isTimerOn) {
+      document.title = `Remaining time - ${formatTime(
         currentMood.currentTime
       )}`;
     }
-  }, [currentMood, isTimerOn]);
+  }, [currentMood, isTimerOn, playSiren]);
 
   return (
     <ClockDial>

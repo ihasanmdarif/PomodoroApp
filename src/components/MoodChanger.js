@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
-import useSound from "use-sound";
 import styled, { css } from "styled-components";
 import { AppContext } from "../AppProvider";
 import { device } from "../styles/device";
-import menuClick from "../tones/menuClick.mp3";
 
 const Switcher = styled.div`
   display: inline-block;
@@ -68,12 +66,7 @@ const MoodChanger = () => {
     AppContext
   );
 
-  const [playButtonClick] = useSound(menuClick, {
-    volume: 0.2,
-  });
-
   const handleMoodChange = (elem) => {
-    playButtonClick();
     resetTimer();
     toggleMoods(elem);
   };
