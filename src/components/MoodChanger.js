@@ -16,7 +16,7 @@ const Switcher = styled.div`
   }
 
   @media ${device.mobileM} {
-    padding: 15px;
+    padding: 12px 10px;
   }
   @media ${device.laptop} {
     padding: 17px 28px;
@@ -44,6 +44,11 @@ const Container = styled.div`
 
   @media ${device.mobileM} {
     max-width: 330px;
+    padding: 8px;
+  }
+
+  @media ${device.mobileL} {
+    max-width: 370px;
     padding: 8px;
   }
 

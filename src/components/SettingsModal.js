@@ -12,9 +12,10 @@ import { AppContext } from "../AppProvider";
 
 import { device } from "../styles/device";
 
+// color: #bdc3c7;
 const Icon = styled.span`
-  color: #bdc3c7;
   cursor: pointer;
+  color: ${(props) => props.theme.colors.main};
 `;
 
 const Modal = styled.div`
