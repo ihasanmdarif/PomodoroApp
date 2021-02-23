@@ -128,9 +128,7 @@ const Clock = () => {
       }
       isTimerOn && playSiren();
     } else if (isTimerOn) {
-      document.title = `Remaining time - ${formatTime(
-        currentMood.currentTime
-      )}`;
+      document.title = `${formatTime(currentMood.currentTime)}- Remaining time`;
     }
   }, [currentMood, isTimerOn, playSiren]);
 
